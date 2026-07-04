@@ -71,7 +71,7 @@ class TeamMember:
 class Client:
 
     @staticmethod
-    def new_client(name,email,phone_number:str | None,password):
+    def new_client(name,email,password,phone_number:str | None):
         role="client"
         password_hash=bcrypt.hashpw(password.encode(),salt=bcrypt.gensalt()).decode()
         try:

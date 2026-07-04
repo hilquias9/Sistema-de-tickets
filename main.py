@@ -67,8 +67,8 @@ def login(request:Request,email:str=Form(),password:str=Form()):
 
 
 @app.post("/create_account",response_class=HTMLResponse)
-def create_account_post(request:Request,name:str=Form(),email:str=Form(),phone_number:str=Form(),password:str=Form()):
-    Client.new_client(name,email,phone_number,password)
+def create_account_post(request:Request,name:str=Form(),email:str=Form(),password:str=Form(),phone_number:str=Form()):
+    Client.new_client(name,email,password,phone_number)
     return RedirectResponse(url="/",status_code=302)
 
 
