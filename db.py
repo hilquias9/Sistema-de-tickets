@@ -31,7 +31,8 @@ class TeamMember:
                     cursor.execute("""INSERT INTO users(name,email,password_hash,role) VALUES (%s,%s,%s,%s)""",(name,email,password_hash,role,))
         except psycopg2.errors.UniqueViolation:
             raise HTTPException(status_code=409, detail="THIS EMAIL ADDRESS IS ALREADY IN USE")
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO new_member ",error)
             raise HTTPException(status_code=500,detail="DB ERROR")
 
     @staticmethod
@@ -49,6 +50,7 @@ class TeamMember:
         except psycopg2.Error:
             raise HTTPException(status_code=500,detail="MEMBER INFO ERROR")
 
+    @staticmethod
     def member_off(id:int):
         try:
             with psycopg2.connect(DB_CONNECTION) as conn:
@@ -57,6 +59,7 @@ class TeamMember:
         except Exception as error:
             print("NÃO FOI POSSÍVEL DESLIGAR O TEAM_MEMBER, ",error)
 
+    @staticmethod
     def member_on(id:int):
         try:
             with psycopg2.connect(DB_CONNECTION) as conn:
@@ -77,7 +80,8 @@ class Client:
                     cursor.execute("""INSERT INTO users(name,email,password_hash,phone_number,role) VALUES (%s,%s,%s,%s,%s)""",(name,email,password_hash,phone_number,role,))
         except psycopg2.errors.UniqueViolation:
             raise HTTPException(status_code=409, detail="THIS EMAIL ADDRESS IS ALREADY IN USE")
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO new_client ",error)
             raise HTTPException(status_code=500,detail="DB ERROR")
 
     @staticmethod
@@ -94,7 +98,8 @@ class Client:
                                 "tickets_title":titles
                                 }
                     return dictionary
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO client_info ",error)
             raise HTTPException(status_code=500,detail="MEMBER INFO ERROR")
 
 class Tickets:
@@ -104,7 +109,8 @@ class Tickets:
             with psycopg2.connect(DB_CONNECTION) as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("""INSERT INTO tickets(client_id,title,description) VALUES (%s,%s,%s)""",(id,title,msg))
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO new_ticket ",error)
             raise HTTPException(status_code=500,detail="DB_ERROR")
     
     @staticmethod
@@ -118,7 +124,8 @@ class Tickets:
                     for title in titles:
                         titles_list.append(title[0])
                     return titles_list
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO see_client_open_tickets ",error)
             raise HTTPException(status_code=500,detail="SEEOPENTICKETS")
     
     @staticmethod
@@ -139,6 +146,7 @@ class Tickets:
                                                 }
                             counter+=1
                         return tickets_dict
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO see_all_open_tickets ",error)
             raise HTTPException(status_code=500,detail="PULLTICKETS")
 

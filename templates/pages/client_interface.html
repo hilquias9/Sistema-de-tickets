@@ -19,12 +19,16 @@
     <section class="my_tickets">
         <h1>Bem vindo {{user_id.name}}!</h1>
         <h1>
-        MEUS TIQUETES
+        MEUS TÍQUETES
         </h1>
         <ul>
-            {% for title in user_id.tickets_title %}
-                <li><button>{{title}}</button></li>
-            {% endfor %}
+            {% if user_id.tickets_title %}
+                {% for title in user_id.tickets_title %}
+                    <li><button>{{title}}</button></li>
+                {% endfor %}
+            {% else %}
+                <li><button>Sem tíquetes</button></li>
+            {% endif %}
         </ul>
             <section class="new_ticket">
                 <h2>
