@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <title>TICKETS SITE</title>
+</head>
+<body>
+    <section class="login_section">
+        <h1>Login</h1>
+        <form class="form-1" action="/" method="post">
+            <input name="email" type="email" placeholder="Email" required>
+            <br>
+            <input name="password" type="password" placeholder="Senha" required>
+            <br>
+            <button id="botao-enviar">Enviar</button>
+        </form>
+        <form class="form-2" action="/create_account" method="get">
+            <button id="botao-criar-conta">Criar Conta</button>
+        </form>
+    </section>
+</body>
+</html>

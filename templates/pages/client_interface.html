@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='client_interface.css') }}">
+    <title>TICKETS SITE</title>
+</head>
+<body>
+    <section class="my_profile">
+        <div class="my_profile_div_1">
+            <p>USUÁRIO: {{user_id.name}}</p>
+            <p>EMAIL: {{user_id.email}}</p>
+            <form action="/logout" method="post">
+                <button type="submit" style="cursor: pointer;">DESLOGAR</button>
+            </form>
+        </div>
+    </section>
+    <section class="my_tickets">
+        <h1>Bem vindo {{user_id.name}}!</h1>
+        <h1>
+        MEUS TIQUETES
+        </h1>
+        <ul>
+            {% for title in user_id.tickets_title %}
+                <li><button>{{title}}</button></li>
+            {% endfor %}
+        </ul>
+            <section class="new_ticket">
+                <h2>
+                    NOVO TÍQUETE
+                </h2>
+                <div class="write_new_ticket">
+                    <form method="post" action="/receive/tickets/{{user_id.id}}">
+                        <input name="title" type="text" placeholder="Título" maxlength="50" required>
+                        <textarea name="msg" placeholder="COMECE POR AQUI" rows=20 cols="50" required></textarea>
+                        <button style="cursor: pointer;">ENVIAR</button>
+                    </form>
+                </div>
+            </section>
+    </section>
+    <section class="clicked_ticket">
+        <div>
+            <h2>TÍQUETE</h2>
+            <h3>Data</h3>
+            <h4>Descrição</h4>
+        </div>
+        <div>
+            <h2>Respostas</h2>
+            <h4>Autor</h4>
+            <h4>Resposta</h4>
+        </div>
+    </section>
+</body>
+</html>

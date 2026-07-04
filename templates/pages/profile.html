@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='profile.css') }}">
+    <title>TICKETS SITE</title>
+</head>
+<body>
+    <section>
+        <h1>Bem vindo {{user_id.name}}!</h1>
+        <h2>CHAMADOS</h2>
+        <table>
+            <tr>
+                <th>Cliente</th>
+                <th>Motivo</ht>
+                <th>Descrição</th>     
+                <th>Data</th>
+                <th>Verificar</th>
+            </tr>
+            {% for ticket in tickets.values() %}
+            <tr>
+                <td>{{ticket.id[1]}}</td>
+                <td>{{ticket.title}}</td>
+                <td>{{ticket.description}}</td>
+                <td>{{ticket.created_at}}</td>
+                <td><button>RESPONDER</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <form action="/logout" method="post">
+            <button type="submit">Deslogar</button>
+        </form>
+    </section>
+</body>
+</html>

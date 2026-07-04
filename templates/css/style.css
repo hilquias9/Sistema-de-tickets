@@ -1,0 +1,48 @@
+body{
+    text-align: center;
+}
+
+.login_section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-1{
+    max-width: 180px;
+}
+.form-2{
+    max-width: 180px;
+    width: 180px;
+}
+.login_section input{
+    padding: 10px;
+    margin-bottom: 5px;
+    max-width: 100%;
+}
+.login_section input:hover{
+    border-color: #7D4698;
+}
+
+.login_section button{
+    padding: 10px;
+    width: 100%;
+    margin-bottom:5px ;
+}
+
+#botao-enviar{
+    background-color: #7D4698;
+    color: white;
+}
+#botao-enviar:hover{
+    background-color: #59316B;
+}
+
+#botao-criar-conta{
+    background-color: white;
+    color: #59316B;
+    border-color: #7D4698;
+
+}
+#botao-criar-conta:hover{
+    background-color: #f6f1f9;
+}
