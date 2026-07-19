@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', path='client_interface.css') }}">
     <title>TICKETS SITE</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </head>
 <body>
     <section class="my_profile">
@@ -22,9 +23,13 @@
         MEUS TÍQUETES
         </h1>
         <ul>
-            {% if user_id.tickets_title %}
-                {% for title in user_id.tickets_title %}
-                    <li><button>{{title}}</button></li>
+            {% if user_id.tickets %}
+                {% for ticket in user_id.tickets %}
+                        <li><button
+                            hx-get="/profile/client/tickets/{{ticket[1]}}"
+                            hx-target="#ticket_info"
+                            hx-swap="innerHTML"
+                            >{{ticket[0]}}</button></li>
                 {% endfor %}
             {% else %}
                 <li><button>Sem tíquetes</button></li>
@@ -43,16 +48,9 @@
                 </div>
             </section>
     </section>
-    <section class="clicked_ticket">
+    <section class="clicked_ticket" id="ticket_info">
         <div>
-            <h2>TÍQUETE</h2>
-            <h3>Data</h3>
-            <h4>Descrição</h4>
-        </div>
-        <div>
-            <h2>Respostas</h2>
-            <h4>Autor</h4>
-            <h4>Resposta</h4>
+            <h3>Nenhum ticket selecionado.</h3>
         </div>
     </section>
 </body>

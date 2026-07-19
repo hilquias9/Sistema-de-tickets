@@ -2,7 +2,7 @@ import psycopg2
 import bcrypt
 from auth import DB_CONNECTION
 from fastapi import HTTPException
-
+from datetime import datetime
 
 
 class User:
@@ -91,11 +91,11 @@ class Client:
                 with conn.cursor() as cursor:
                     cursor.execute("""SELECT name,email FROM users WHERE id=%s AND role=%s""",(id,"client"))
                     member=cursor.fetchone()
-                    titles=Tickets.see_client_open_tickets(id)
+                    tickets=Tickets.see_client_open_tickets(id)
                     dictionary={"id":id,
                                 "name":member[0],
                                 "email":member[1],
-                                "tickets_title":titles
+                                "tickets":tickets
                                 }
                     return dictionary
         except psycopg2.Error as error:
@@ -118,12 +118,12 @@ class Tickets:
         try:
             with psycopg2.connect(DB_CONNECTION) as conn:
                 with conn.cursor() as cursor:
-                    cursor.execute("""SELECT title FROM tickets WHERE client_id=%s and status=%s""",(id,"open",))
-                    titles_list=[]
-                    titles=cursor.fetchall()
-                    for title in titles:
-                        titles_list.append(title[0])
-                    return titles_list
+                    cursor.execute("""SELECT title,id FROM tickets WHERE client_id=%s and status=%s""",(id,"open",))
+                    tickets_list=[]
+                    tickets_db=cursor.fetchall()
+                    for ticket in tickets_db:
+                        tickets_list.append((ticket[0],ticket[1]))
+                    return tickets_list
         except psycopg2.Error as error:
             print("OCORREU UM ERRO AO USAR A FUNÇÃO see_client_open_tickets ",error)
             raise HTTPException(status_code=500,detail="SEEOPENTICKETS")
@@ -150,3 +150,15 @@ class Tickets:
             print("OCORREU UM ERRO AO USAR A FUNÇÃO see_all_open_tickets ",error)
             raise HTTPException(status_code=500,detail="PULLTICKETS")
 
+    @staticmethod
+    def see_a_ticket(ticket_id:int):
+        try:
+            with psycopg2.connect(DB_CONNECTION) as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute("""SELECT title,description,created_at FROM tickets WHERE id=%s and status=%s""",(ticket_id,"open",))
+                    db_ticket=cursor.fetchone()
+                    time_w_seconds=db_ticket[2].strftime("%d/%m/%Y")
+                    ticket=(db_ticket[0],db_ticket[1],time_w_seconds)
+                    return ticket
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO see_a_ticket ",error)
