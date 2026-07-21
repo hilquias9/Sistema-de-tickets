@@ -112,11 +112,11 @@ class Tickets:
         try:
             with psycopg2.connect(DB_CONNECTION) as conn:
                 with conn.cursor() as cursor:
-                    cursor.execute("""SELECT title FROM tickets WHERE client_id=%s and status=%s""",(id,"open",))
+                    cursor.execute("""SELECT title,id FROM tickets WHERE client_id=%s and status=%s""",(id,"open",))
                     titles_list=[]
                     titles=cursor.fetchall()
                     for title in titles:
-                        titles_list.append(title[0])
+                        titles_list.append(f"{title[0]} - {title[1]}")
                     return titles_list
         except psycopg2.Error:
             raise HTTPException(status_code=500,detail="SEEOPENTICKETS")
