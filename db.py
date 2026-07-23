@@ -2,7 +2,7 @@ import psycopg2
 import bcrypt
 from auth import DB_CONNECTION
 from fastapi import HTTPException
-
+from datetime import datetime
 
 
 class User:
@@ -31,7 +31,8 @@ class TeamMember:
                     cursor.execute("""INSERT INTO users(name,email,password_hash,role) VALUES (%s,%s,%s,%s)""",(name,email,password_hash,role,))
         except psycopg2.errors.UniqueViolation:
             raise HTTPException(status_code=409, detail="THIS EMAIL ADDRESS IS ALREADY IN USE")
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO new_member ",error)
             raise HTTPException(status_code=500,detail="DB ERROR")
 
     @staticmethod
@@ -49,6 +50,7 @@ class TeamMember:
         except psycopg2.Error:
             raise HTTPException(status_code=500,detail="MEMBER INFO ERROR")
 
+    @staticmethod
     def member_off(id:int):
         try:
             with psycopg2.connect(DB_CONNECTION) as conn:
@@ -57,6 +59,7 @@ class TeamMember:
         except Exception as error:
             print("NÃO FOI POSSÍVEL DESLIGAR O TEAM_MEMBER, ",error)
 
+    @staticmethod
     def member_on(id:int):
         try:
             with psycopg2.connect(DB_CONNECTION) as conn:
@@ -68,7 +71,7 @@ class TeamMember:
 class Client:
 
     @staticmethod
-    def new_client(name,email,phone_number:str | None,password):
+    def new_client(name,email,password,phone_number:str | None):
         role="client"
         password_hash=bcrypt.hashpw(password.encode(),salt=bcrypt.gensalt()).decode()
         try:
@@ -77,7 +80,8 @@ class Client:
                     cursor.execute("""INSERT INTO users(name,email,password_hash,phone_number,role) VALUES (%s,%s,%s,%s,%s)""",(name,email,password_hash,phone_number,role,))
         except psycopg2.errors.UniqueViolation:
             raise HTTPException(status_code=409, detail="THIS EMAIL ADDRESS IS ALREADY IN USE")
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO new_client ",error)
             raise HTTPException(status_code=500,detail="DB ERROR")
 
     @staticmethod
@@ -87,14 +91,15 @@ class Client:
                 with conn.cursor() as cursor:
                     cursor.execute("""SELECT name,email FROM users WHERE id=%s AND role=%s""",(id,"client"))
                     member=cursor.fetchone()
-                    titles=Tickets.see_client_open_tickets(id)
+                    tickets=Tickets.see_client_open_tickets(id)
                     dictionary={"id":id,
                                 "name":member[0],
                                 "email":member[1],
-                                "tickets_title":titles
+                                "tickets":tickets
                                 }
                     return dictionary
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO client_info ",error)
             raise HTTPException(status_code=500,detail="MEMBER INFO ERROR")
 
 class Tickets:
@@ -104,7 +109,8 @@ class Tickets:
             with psycopg2.connect(DB_CONNECTION) as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("""INSERT INTO tickets(client_id,title,description) VALUES (%s,%s,%s)""",(id,title,msg))
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO new_ticket ",error)
             raise HTTPException(status_code=500,detail="DB_ERROR")
     
     @staticmethod
@@ -112,13 +118,14 @@ class Tickets:
         try:
             with psycopg2.connect(DB_CONNECTION) as conn:
                 with conn.cursor() as cursor:
-                    cursor.execute("""SELECT title FROM tickets WHERE client_id=%s and status=%s""",(id,"open",))
-                    titles_list=[]
-                    titles=cursor.fetchall()
-                    for title in titles:
-                        titles_list.append(title[0])
-                    return titles_list
-        except psycopg2.Error:
+                    cursor.execute("""SELECT title,id FROM tickets WHERE client_id=%s and status=%s""",(id,"open",))
+                    tickets_list=[]
+                    tickets_db=cursor.fetchall()
+                    for ticket in tickets_db:
+                        tickets_list.append((ticket[0],ticket[1]))
+                    return tickets_list
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO see_client_open_tickets ",error)
             raise HTTPException(status_code=500,detail="SEEOPENTICKETS")
     
     @staticmethod
@@ -139,6 +146,19 @@ class Tickets:
                                                 }
                             counter+=1
                         return tickets_dict
-        except psycopg2.Error:
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO see_all_open_tickets ",error)
             raise HTTPException(status_code=500,detail="PULLTICKETS")
 
+    @staticmethod
+    def see_a_ticket(ticket_id:int):
+        try:
+            with psycopg2.connect(DB_CONNECTION) as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute("""SELECT title,description,created_at FROM tickets WHERE id=%s and status=%s""",(ticket_id,"open",))
+                    db_ticket=cursor.fetchone()
+                    time_w_seconds=db_ticket[2].strftime("%d/%m/%Y")
+                    ticket=(db_ticket[0],db_ticket[1],time_w_seconds)
+                    return ticket
+        except psycopg2.Error as error:
+            print("OCORREU UM ERRO AO USAR A FUNÇÃO see_a_ticket ",error)
