@@ -119,22 +119,12 @@ class Tickets:
             with psycopg2.connect(DB_CONNECTION) as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("""SELECT title,id FROM tickets WHERE client_id=%s and status=%s""",(id,"open",))
-<<<<<<< HEAD
                     titles_list=[]
                     titles=cursor.fetchall()
                     for title in titles:
                         titles_list.append(f"{title[0]} - {title[1]}")
                     return titles_list
         except psycopg2.Error:
-=======
-                    tickets_list=[]
-                    tickets_db=cursor.fetchall()
-                    for ticket in tickets_db:
-                        tickets_list.append((ticket[0],ticket[1]))
-                    return tickets_list
-        except psycopg2.Error as error:
-            print("OCORREU UM ERRO AO USAR A FUNÇÃO see_client_open_tickets ",error)
->>>>>>> f13112fa1e427f63ad4ef0cc7ce614c17a61960e
             raise HTTPException(status_code=500,detail="SEEOPENTICKETS")
     
     @staticmethod
