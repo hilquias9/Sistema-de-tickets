@@ -26,10 +26,10 @@
             {% if user_id.tickets %}
                 {% for ticket in user_id.tickets %}
                         <li><button
-                            hx-get="/profile/client/tickets/{{ticket[1]}}"
+                            hx-get="/profile/client/tickets/{{ticket[-1]}}"
                             hx-target="#ticket_info"
                             hx-swap="innerHTML"
-                            >{{ticket[0]}}</button></li>
+                            >{{ticket}}</button></li>
                 {% endfor %}
             {% else %}
                 <li><button>Sem tíquetes</button></li>
