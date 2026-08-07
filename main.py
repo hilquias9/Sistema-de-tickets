@@ -55,6 +55,7 @@ def profile_team_member(request:Request,user_id:dict=Depends(get_current_user)):
 def profile_client(request:Request,user_id:dict=Depends(get_current_user)):
     if request.session.get("role")!="client":
         raise HTTPException(status_code=401)
+    print({"user_id":user_id})
     return templates.TemplateResponse(request,name="pages/client_interface.html",context={"user_id":user_id})
 
 
