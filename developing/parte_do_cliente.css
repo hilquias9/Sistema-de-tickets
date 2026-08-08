@@ -19,6 +19,15 @@ nav {
     flex-direction: row;
     gap: 20px;
     align-items: center;
+    justify-content: space-between;
+}
+.elements_imgs{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-right: 2%;
 }
 .element{
     width: 50px;
@@ -29,6 +38,12 @@ nav {
     display: flex;
     align-items: center;
     justify-items: center;
+    justify-content: center;
+    transition: 0.5s;
+
+}
+.element:hover{
+    background-color: #59316B;
 }
 .last_ticket{
     display: flex;
@@ -53,12 +68,18 @@ nav {
     justify-content: center;
     padding: 15px;
     box-sizing: border-box;
+
+
+    position: absolute;
+    top: -10px;
+    left: 0;
 }
 
 .ticket_msg {
     width: 550px;
     background-color: white;
     display: flex;
+    flex-direction: column;
     align-items: center;
     align-content: center;
     justify-content: center;
@@ -69,11 +90,7 @@ nav {
     padding-bottom: 40px;
     box-sizing: border-box;
 }
-.part_2{
-    background-color: white;
-    height: 10px;
-    width: 100vw;
-}
+
 button{
     font-family: 'League Spartan',sans-serif;
     border-radius: 30px;
@@ -88,4 +105,14 @@ button{
 }
 button:hover{
     background-color: #ab52c5;
+}
+.visual_last_t {
+    position: relative;
+
+    width: 550px;
+}
+.chat_img{
+    margin-left: 80%;
+    position: relative;
+    display: inline-block;
 }
