@@ -12,7 +12,7 @@ app=FastAPI()
 
 app.add_middleware(SessionMiddleware,secret_key=SECRET_KEY)
 
-app.mount("/static",StaticFiles(directory="templates/css"),name="static")
+app.mount("/static",StaticFiles(directory="templates/static"),name="static")
 
 templates=Jinja2Templates(directory="templates")
 
