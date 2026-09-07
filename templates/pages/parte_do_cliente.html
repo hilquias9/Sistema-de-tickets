@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/parte_do_cliente.css') }}">
+    <title>Sistema de Tíquetes</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="{{ url_for('static', path='img/ticket_logo.png') }}" width="400px" height="200px">
+        </div>
+        <div class="elements_imgs">
+            <div class="element">
+                <img src="{{ url_for('static', path='img/home.png') }}" width="40px" height="40px">
+            </div>
+            <div class="element">
+                <img src="{{ url_for('static', path='img/person.png') }}">
+            </div>
+            <div class="element">
+                <img src="{{ url_for('static', path='img/exit.png') }}">
+            </div>
+        </div>
+
+    </nav>
+    <section class="tickets">
+        <section class="last_ticket">
+            <h1>Último Tíquete</h1>
+            <div class="visual_last_t">
+                <div class="ticket_title">
+                    {% if user_id.tickets %}
+                        <h3>{{ user_id.tickets[0] }}</h3>
+                    {% endif %}
+                </div>
+                <div class="ticket_msg">
+                    {% if user_id.tickets %}
+                        <p
+                            hx-get="/profile/client/tickets/{{ user_id.tickets[0][-1] }}"
+                            hx-trigger="load"
+                            hx-swap="innerHTML">
+                        </p>
+                    {% endif %}
+                    <img src="{{ url_for('static', path='img/chat.png') }}" class="chat_img">
+                </div>
+                <button>Criar</button>
+                <button>Ver</button>
+                <button>Editar</button>
+            </div>
+        </section>
+            <section class="part_2">
+    </section>
+    </section>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+</body>
+
+</html>
