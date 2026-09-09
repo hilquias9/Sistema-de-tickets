@@ -34,13 +34,13 @@
             <div class="visual_last_t">
                 <div class="ticket_title">
                     {% if user_id.tickets %}
-                        <h3>{{ user_id.tickets[0] }}</h3>
+                        <h3>{{ user_id.tickets[-1] }}</h3>
                     {% endif %}
                 </div>
                 <div class="ticket_msg">
                     {% if user_id.tickets %}
                         <p
-                            hx-get="/profile/client/tickets/{{ user_id.tickets[0][-1] }}"
+                            hx-get="/profile/client/tickets/{{ user_id.tickets[-1][-1] }}"
                             hx-trigger="load"
                             hx-swap="innerHTML">
                         </p>
