@@ -157,7 +157,7 @@ class Tickets:
                     cursor.execute("""SELECT title,description,created_at FROM tickets WHERE id=%s and status=%s""",(ticket_id,"open",))
                     db_ticket=cursor.fetchone()
                     time_w_seconds=db_ticket[2].strftime("%d/%m/%Y")
-                    ticket=(db_ticket[0],db_ticket[1],time_w_seconds)
+                    ticket=(db_ticket[1],time_w_seconds)
                     return ticket
         except psycopg2.Error as error:
             print("OCORREU UM ERRO AO USAR A FUNÇÃO see_a_ticket ",error)
