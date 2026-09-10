@@ -65,7 +65,7 @@ def get_ticket_info(request:Request,id:int,user_id:dict=Depends(get_current_user
 
 @app.get("/teste")
 def teste_nova_pag(request:Request,user_id:dict=Depends(get_current_user)):
-    return templates.TemplateResponse(request,name="pages/parte_do_cliente.html",context={"user_id":user_id})
+    return templates.TemplateResponse(request,name="pages/new_client_interface.html",context={"user_id":user_id})
 
 
 @app.post("/",response_class=HTMLResponse)

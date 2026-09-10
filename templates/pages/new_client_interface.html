@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/parte_do_cliente.css') }}">
     <title>Sistema de Tíquetes</title>
 </head>
+
 <body>
     <nav>
         <div class="logo">
@@ -34,16 +35,14 @@
             <div class="visual_last_t">
                 <div class="ticket_title">
                     {% if user_id.tickets %}
-                        <h3>{{ user_id.tickets[-1] }}</h3>
+                    <h3>{{ user_id.tickets[-1] }}</h3>
                     {% endif %}
                 </div>
                 <div class="ticket_msg">
                     {% if user_id.tickets %}
-                        <p
-                            hx-get="/profile/client/tickets/{{ user_id.tickets[-1][-1] }}"
-                            hx-trigger="load"
-                            hx-swap="innerHTML">
-                        </p>
+                    <p hx-get="/profile/client/tickets/{{ user_id.tickets[-1][-1] }}" hx-trigger="load"
+                        hx-swap="innerHTML">
+                    </p>
                     {% endif %}
                     <img src="{{ url_for('static', path='img/chat.png') }}" class="chat_img">
                 </div>
@@ -52,8 +51,19 @@
                 <button>Editar</button>
             </div>
         </section>
-            <section class="part_2">
-    </section>
+        <section class="part_2">
+            <section class="new_last_ticket">
+                <form action="">
+                    <div class="new_ticket_title">
+                        <input type="text" placeholder="Título" class="new_title" maxlength="25px" required>
+                    </div>
+                    <div class="ticket_msg_2">
+                        <textarea type="text" placeholder="Descreva a situação..." class="new_description" maxlength="600px"></textarea>
+                        <button type="submit">Enviar</button>
+                    </div>
+                </form>
+            </section>
+        </section>
     </section>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </body>
