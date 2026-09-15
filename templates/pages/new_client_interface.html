@@ -46,13 +46,14 @@
                     {% endif %}
                     <img src="{{ url_for('static', path='img/chat.png') }}" class="chat_img">
                 </div>
-                <button hx-get="/profile/client/button-send" hx-target=".part_2">Criar</button>
-                <button>Ver</button>
+                <button hx-get="/profile/client/button-send" hx-target=".part_send">Criar</button>
+                <button hx-get="/profile/client/button-see" hx-target=".part_see">Ver</button>
                 <button>Editar</button>
             </div>
         </section>
-        <section class="part_2">
-
+        <section class="part_send">
+        </section>
+        <section class="part_see">
         </section>
     </section>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>

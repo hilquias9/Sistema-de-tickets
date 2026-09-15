@@ -67,6 +67,10 @@ def get_ticket_info(request:Request,id:int,user_id:dict=Depends(get_current_user
 def teste_nova_pag(request:Request,user_id:dict=Depends(get_current_user)):
     return templates.TemplateResponse(request,name="pages/button_send.html",context={"user_id":user_id})
 
+@app.get("/profile/client/button-see")
+def teste_button_see(request:Request,user_id:dict=Depends(get_current_user)):
+    tickets=Tickets.see_client_open_tickets(int(user_id["id"]))
+    return templates.TemplateResponse(request,name="pages/button-see.html",context={"user_id":user_id,"tickets":tickets})
 
 
 @app.post("/",response_class=HTMLResponse)
