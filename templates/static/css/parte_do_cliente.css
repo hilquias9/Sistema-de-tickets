@@ -152,8 +152,8 @@ button:hover{
     font-size: 15px;
     text-align: center;
     width: 100%;
-    height: 90%;
-    resize: none;
+    height: 300px;
+    resize: vertical;
     field-sizing: content;
     overflow: hidden;
   min-height: 50px;    
@@ -196,8 +196,8 @@ button:hover{
 
 
     position: absolute;
-    top: 80px;
-    left: 0;
+    top: 180px;
+    
 }
 .ticket_msg_2 {
     width: 550px;
