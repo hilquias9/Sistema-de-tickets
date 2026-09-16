@@ -63,9 +63,14 @@ def get_ticket_info(request:Request,id:int,user_id:dict=Depends(get_current_user
     ticket=Tickets.see_a_ticket(id)
     return templates.TemplateResponse(request,name="pages/client_ticket_info.html",context={"user_id":user_id,"ticket":ticket})
 
-@app.get("/teste")
+@app.get("/profile/client/button-send")
 def teste_nova_pag(request:Request,user_id:dict=Depends(get_current_user)):
-    return templates.TemplateResponse(request,name="pages/parte_do_cliente.html",context={"user_id":user_id})
+    return templates.TemplateResponse(request,name="pages/button_send.html",context={"user_id":user_id})
+
+@app.get("/profile/client/button-see")
+def teste_button_see(request:Request,user_id:dict=Depends(get_current_user)):
+    tickets=Tickets.see_client_open_tickets(int(user_id["id"]))
+    return templates.TemplateResponse(request,name="pages/button-see.html",context={"user_id":user_id,"tickets":tickets})
 
 
 @app.post("/",response_class=HTMLResponse)

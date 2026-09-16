@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/parte_do_cliente.css') }}">
     <title>Sistema de Tíquetes</title>
 </head>
+
 <body>
     <nav>
         <div class="logo">
@@ -34,26 +35,26 @@
             <div class="visual_last_t">
                 <div class="ticket_title">
                     {% if user_id.tickets %}
-                        <h3>{{ user_id.tickets[-1] }}</h3>
+                    <h3>{{ user_id.tickets[-1] }}</h3>
                     {% endif %}
                 </div>
                 <div class="ticket_msg">
                     {% if user_id.tickets %}
-                        <p
-                            hx-get="/profile/client/tickets/{{ user_id.tickets[-1][-1] }}"
-                            hx-trigger="load"
-                            hx-swap="innerHTML">
-                        </p>
+                    <p hx-get="/profile/client/tickets/{{ user_id.tickets[-1][-1] }}" hx-trigger="load"
+                        hx-swap="innerHTML">
+                    </p>
                     {% endif %}
                     <img src="{{ url_for('static', path='img/chat.png') }}" class="chat_img">
                 </div>
-                <button>Criar</button>
-                <button>Ver</button>
+                <button hx-get="/profile/client/button-send" hx-target=".part_see">Criar</button>
+                <button hx-get="/profile/client/button-see" hx-target=".part_see">Ver</button>
                 <button>Editar</button>
             </div>
         </section>
-            <section class="part_2">
-    </section>
+        <section class="part_send">
+        </section>
+        <section class="part_see">
+        </section>
     </section>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </body>
