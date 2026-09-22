@@ -2,7 +2,7 @@
     {% if tickets %}
     {% for ticket in tickets %}
     <div class="background_see">
-    <label class="titles">{{ ticket }}</label>
+    <label class="titles">{{ ticket[0] }} - {{ ticket[1] }}</label>
     </div>
     {% endfor %}
     {% endif %}

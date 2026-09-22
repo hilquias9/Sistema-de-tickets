@@ -1,10 +1,10 @@
 <section class="new_last_ticket">
-    <form action="">
+    <form action="/receive/tickets/{{user_id.id}}" method="post">
         <div class="new_ticket_title">
-            <input type="text" placeholder="Título" class="new_title" maxlength="25px"  required>
+            <input type="text" placeholder="Título" class="new_title" maxlength="25px"  name="title" required>
         </div>
         <div class="ticket_msg_2">
-            <textarea type="text" placeholder="Descreva a situação..." class="new_description" maxlength="600px" required></textarea>
+            <textarea type="text" placeholder="Descreva a situação..." class="new_description" maxlength="600px" name="msg" required></textarea>
             <button type="submit">Enviar</button>
         </div>
     </form>

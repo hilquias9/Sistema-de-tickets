@@ -122,7 +122,7 @@ class Tickets:
                     titles_list=[]
                     titles=cursor.fetchall()
                     for title in titles:
-                        titles_list.append(f"{title[0]} - {title[1]}")
+                        titles_list.append((title[0],title[1]))
                     return titles_list
         except psycopg2.Error:
             raise HTTPException(status_code=500,detail="SEEOPENTICKETS")
