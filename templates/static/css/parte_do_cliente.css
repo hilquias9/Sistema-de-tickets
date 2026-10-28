@@ -123,6 +123,9 @@ button:hover{
 
 }
 .part_see{
+    width: 550px;
+    height: 400px;
+    overflow-y: auto;
     display: flex;
     gap: 5px;
     flex-direction: column;
